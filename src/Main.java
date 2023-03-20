@@ -7,7 +7,7 @@ public class Main {
         float[] productPrices = {100f, 200f, 300f};
         final String PATH = "D:\\Другое\\Проекты\\java_core_3\\файлы";
         File dir = new File(PATH);
-        File textFile = new File(dir, "basket.bin1");
+        File textFile = new File(dir, "basket1.bin");
         String com;
         boolean mark = true;
         Basket basket = new Basket();
@@ -62,6 +62,8 @@ public class Main {
                         System.out.println("Введите название файла");
                         textFile = new File(dir, scan.nextLine());
                         basket = Basket.loadFromBinFile(textFile);
+                        System.out.println("Ваша корзина:");
+                        basket.printCard();
                     } catch (IOException ex) {
                         System.out.println("Не удалось найти файл");
                     } catch (ClassNotFoundException e) {
