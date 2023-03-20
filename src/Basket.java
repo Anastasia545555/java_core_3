@@ -1,9 +1,7 @@
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.*;
 
-public class Basket {
+public class Basket implements Serializable{
     private String[] productName;
     private float[] productPrice;
     private int[] productAmount;
@@ -44,13 +42,12 @@ public class Basket {
         }
     }
 
-    public boolean saveTxt(File textFile) throws IOException {
+    public void saveTxt(File textFile) throws IOException {
         try (PrintWriter printWriter = new PrintWriter(textFile)) {
             printWriter.println(productName.length);
             for (int i = 0; i < productName.length; i++) {
                 printWriter.println(productName[i] + "\t" + productPrice[i] + "\t" + productAmount[i] + "\t");
             }
-            return true;
         }
     }
 
@@ -74,5 +71,16 @@ public class Basket {
         //return null;
     }
 
+    public void saveBin(File file) throws IOException{
+        try (ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream((file)))){
+            out.writeObject(this);
+        }
+    }
 
+    public static Basket loadFromBinFile(File file) throws IOException, ClassNotFoundException{
+        try (ObjectInputStream in=new ObjectInputStream(new FileInputStream((file)))){
+            Basket b=(Basket) in.readObject();
+            return b;
+        }
+    }
 }
